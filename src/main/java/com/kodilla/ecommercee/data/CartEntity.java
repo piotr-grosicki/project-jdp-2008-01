@@ -6,6 +6,7 @@ import com.kodilla.ecommercee.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -27,10 +28,10 @@ public class CartEntity {
     @Column(name = "CART_ID")
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Product> productsList = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL/*, mappedBy = "carts"*/)
     @NotNull
     @JoinColumn(name = "USER_ID")
     private User user;

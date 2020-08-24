@@ -2,10 +2,7 @@ package com.kodilla.ecommercee.domain.product;
 
 import com.kodilla.ecommercee.data.CartEntity;
 import com.kodilla.ecommercee.domain.group.Group;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

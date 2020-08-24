@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Entity(name="Group")
+@Entity(name="Groupzzzzzzzzz")
 public class Group {
     @Id
     @GeneratedValue
