@@ -35,23 +35,23 @@ public class CartTestSuite {
         List<Product> productList = new ArrayList<>();
         productList.add(product4);
 
-        CartEntity cart2 = new CartEntity(user1, product1);
-        CartEntity cart3 = new CartEntity(user2, product2, product3);
-        CartEntity cart4 = new CartEntity(user3, productList);
+        CartEntity cart1 = new CartEntity(user1, product1);
+        CartEntity cart2 = new CartEntity(user2, product2, product3);
+        CartEntity cart3 = new CartEntity(user3, productList);
 
         //When
+        cartDao.save(cart1);
         cartDao.save(cart2);
         cartDao.save(cart3);
-        cartDao.save(cart4);
 
         //Then
+        Assert.assertEquals(cart1, cartDao.findById(cart1.getId()).get());
         Assert.assertEquals(cart2, cartDao.findById(cart2.getId()).get());
         Assert.assertEquals(cart3, cartDao.findById(cart3.getId()).get());
-        Assert.assertEquals(cart4, cartDao.findById(cart4.getId()).get());
 
         //CleanUp
+        cartDao.deleteById(cart1.getId());
         cartDao.deleteById(cart2.getId());
         cartDao.deleteById(cart3.getId());
-        cartDao.deleteById(cart4.getId());
     }
 }
