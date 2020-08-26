@@ -1,6 +1,5 @@
-package com.kodilla.ecommercee;
+package com.kodilla.ecommercee.domain.cart;
 
-import com.kodilla.ecommercee.data.CartEntity;
 import com.kodilla.ecommercee.domain.cart.dao.CartDao;
 import com.kodilla.ecommercee.domain.product.Product;
 import com.kodilla.ecommercee.domain.user.User;
@@ -35,9 +34,9 @@ public class CartTestSuite {
         List<Product> productList = new ArrayList<>();
         productList.add(product4);
 
-        CartEntity cart1 = new CartEntity(user1, product1);
-        CartEntity cart2 = new CartEntity(user2, product2, product3);
-        CartEntity cart3 = new CartEntity(user3, productList);
+        Cart cart1 = new Cart(user1, product1);
+        Cart cart2 = new Cart(user2, product2, product3);
+        Cart cart3 = new Cart(user3, productList);
 
         //When
         cartDao.save(cart1);
