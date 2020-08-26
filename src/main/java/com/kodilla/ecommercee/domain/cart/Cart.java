@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -16,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
@@ -31,10 +29,10 @@ public class Cart {
     @Column(name = "CART_ID")
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
     private List<Product> productsList = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL/*, mappedBy = "carts"*/)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @NotNull
     @JoinColumn(name = "USER_ID")
     private User user;
@@ -42,7 +40,6 @@ public class Cart {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
-
 
     public void addProduct(Product product) {
         productsList.add(product);
