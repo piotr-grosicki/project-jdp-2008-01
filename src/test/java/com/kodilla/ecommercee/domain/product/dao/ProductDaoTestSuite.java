@@ -14,11 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Objects;
 
-//@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProductDaoTestSuite {
@@ -202,5 +200,47 @@ public class ProductDaoTestSuite {
         groupDao.deleteById(group.getId());
         cartDao.deleteById(cart.getId());
         userDao.deleteById(user.getId());
+    }
+
+    @Test
+    public void testSaveDeleteProduct() {
+        // Given
+        Product product = new Product("test", "testProduct", 100.0);
+        Group group = new Group("kurtka");
+        User user = new User();
+        Cart cart = new Cart(user);
+
+        product.addGroup(group);
+        cart.addProduct(product);
+
+        // When
+        userDao.save(user);
+        groupDao.save(group);
+        cartDao.save(cart);
+        productDao.save(product);
+
+        Long groupId = group.getId();
+        Long productId = product.getId();
+        Long cartId = cart.getId();
+        Long userId = user.getId();
+
+        product.setActive(false);
+        productDao.save(product);
+
+        // Then
+        Assert.assertTrue(productDao.findById(productId).isPresent());
+        Assert.assertFalse(productDao.findById(productId).get().isActive());
+
+        Assert.assertTrue(cartDao.findById(cartId).isPresent());
+        Assert.assertEquals(0, cartDao.findById(cartId).get().getProductsList().size());
+
+        Assert.assertTrue(groupDao.findById(groupId).isPresent());
+        Assert.assertEquals(1, groupDao.findById(groupId).get().getProducts().size());
+
+        // Clean-up
+        cartDao.deleteById(cartId);
+        userDao.deleteById(userId);
+        productDao.deleteById(productId);
+        groupDao.deleteById(groupId);
     }
 }

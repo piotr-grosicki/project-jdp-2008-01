@@ -53,6 +53,18 @@ public class Product {
     @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")
     private Group groupId;
 
+    @Column(name="isActive")
+    private boolean isActive = true;
+
+    public void setActive(boolean status) {
+        this.isActive = status;
+        for (Cart cart: carts) {
+            cart.getProductsList().remove(this);
+        }
+        carts = new ArrayList<>();
+
+    }
+
     public Product(String name, String description, double price) {
         this.name = name;
         this.description = description;
